@@ -72,9 +72,9 @@ def hit(mouse, coord, r):
 
 def display_score():
     """Отображение счета на экране"""
-    text = font.render(f'{score}', True, BLACK)
+    text = font.render(f'SCORE : {score}', True, BLACK)
     pixel_plus = int(math.log10(score+0.9))
-    screen.blit(text, (865 - pixel_plus*15, 560))
+    screen.blit(text, (770 - pixel_plus*15, 560))
 
 
 

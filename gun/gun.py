@@ -59,6 +59,7 @@ class Ball:
         self.live = 30
         self.g = 1
         self.coc = randint(1, 100)
+        self.time = 0
 
     def move(self):
         """Переместить мяч по прошествии единицы времени.
@@ -70,6 +71,7 @@ class Ball:
         screen.fill(WHITE)
         self.x += self.vx
         self.y -= self.vy
+        self.time += 1
         if 10 < self.x < 750 and 10 < self.y < 550:
             self.vy -= self.g
         if 10 > self.x or self.x > 750:
@@ -86,19 +88,19 @@ class Ball:
         if self.y > 550:
             self.y = 550
 
+        if self.time >= 5*FPS:
+            self.live = 0
+
         if self.coc <= 10:
             self.r = 10 + randint(-1, 6)
             self.color = BLACK
 
-        if np.abs(self.vx)+np.abs(self.vy) < 10**(-2):
+        if np.abs(self.vx)+np.abs(self.vy) < 10**(-1):
             self.live = 0
-        elif np.abs(self.vx)<10**(-3):
+        if np.abs(self.vx)<10**(-1):
             self.live = 0
-        elif np.abs(self.vy)<10**(-1) and self.y > 500 :
+        if np.abs(self.vy)<10**(-1) and self.y > 500 :
             self.live = 0
-
-        
-
 
     def draw(self):
         pygame.draw.circle(self.screen, self.color, (self.x, self.y), self.r)
@@ -288,7 +290,6 @@ class Cobe:
         if self.y > 550:
             self.y = 550
 
-
 #Задаём начальные параметры
 pygame.init()
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
@@ -300,7 +301,6 @@ gun = Gun(screen)
 target = Target()
 cobe = Cobe()
 finished = False
-
 
 def display_score():
     """Отображение счета, на экране"""
